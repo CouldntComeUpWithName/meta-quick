@@ -2,10 +2,10 @@
 #include <string_view>
 #include <cstdint>
 
-#ifdef _MSC_VER
-# define CURRENT_FUNCTION __FUNCSIG__
+#ifdef defined __clang__ || defined __GNUC__
+# define MQ_PRETTY_FUNCTION __PRETTY_FUNCTION__
 #else
-# define CURRENT_FUNCTION __PRETTY_FUNCTION__
+# define MQ_PRETTY_FUNCTION __FUNCSIG__
 #endif
 
 namespace mq {
@@ -33,7 +33,7 @@ namespace mq {
   template<typename Type>
   constexpr auto nameof() noexcept
   {
-    const std::string_view func_name{ CURRENT_FUNCTION };
+    const std::string_view func_name{ MQ_PRETTY_FUNCTION };
   
   #if defined __clang__ || defined __GNUC__
 
