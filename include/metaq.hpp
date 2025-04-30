@@ -2,10 +2,10 @@
 #include <string_view>
 #include <cstdint>
 
-#ifdef defined __clang__ || defined __GNUC__
-# define MQ_PRETTY_FUNCTION __PRETTY_FUNCTION__
-#else
+#ifdef _MSC_VER
 # define MQ_PRETTY_FUNCTION __FUNCSIG__
+#else
+# define MQ_PRETTY_FUNCTION __PRETTY_FUNCTION__
 #endif
 
 namespace mq {
@@ -41,7 +41,8 @@ namespace mq {
     constexpr auto suffix = ']';
 
     auto begin = func_name.find_first_not_of(' ', func_name.find_first_of(prefix) + 1);
-    auto name = func_name.substr(begin, func_name.find_last_of(suffix) - begin);
+    auto end   = func_name.find_last_of(suffix);
+    auto name  = func_name.substr(begin, end - begin);
     return name;
 
   #else // MSVC 
@@ -87,7 +88,7 @@ namespace mq {
   }
 
   template<typename T>
-  constexpr shash_t hash_code() noexcept
+  constexpr shash_t hash_code()
   {
     return hash_code(nameof<T>());
   }

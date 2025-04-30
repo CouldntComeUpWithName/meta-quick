@@ -2,4 +2,4 @@ add_executable(test1)
 
 target_sources(test1 PRIVATE "static-type-name-test.cpp")
 
-target_link_libraries(test1 PUBLIC ctype-info)
+target_link_libraries(test1 PUBLIC meta-quick)
